@@ -2,6 +2,8 @@
 
  Resizable Xpeccy dump viewer
 
+![plot](/assets/ss_02.PNG)
+
 ![plot](/assets/ss_01.PNG)
 
 # Description:
@@ -10,7 +12,7 @@ For connect press Connect button, enter port number as into Xpeccy and enter dum
 Can resize the window as your wish.
 LMB or ENTER key on memory cell or address cell can to change byte and address.
 
-Validity of Values:
+Values:
 
 Input dec:
 
