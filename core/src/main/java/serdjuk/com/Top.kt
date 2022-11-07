@@ -26,8 +26,10 @@ class Top(private val font: BitmapFont, private val stage2: Stage) : VisTable() 
 
     val hexWidthLabel = VisLabel()
     val hexHeightLabel = VisLabel()
-    val hexFocusedLabel = VisLabel()
-    val hexAddressContentLabel = VisLabel()
+    val focusedAddressLabelHex = VisLabel().also { it.setAlignment(Align.right) }
+    val focusedAddressLabelDec = VisLabel()
+    val focusContentLabelHex = VisLabel().also { it.setAlignment(Align.right) }
+    val focusContentLabelDec = VisLabel()
     val connectButton = TextButton(MESSAGE_CONNECT, VisUI.getSkin())
 
 
@@ -39,18 +41,13 @@ class Top(private val font: BitmapFont, private val stage2: Stage) : VisTable() 
             setPosition(0f, Gdx.graphics.height.toFloat() - TOP_HEIGHT + 4f)
             hexWidthLabel.setText(hexWidth)
             hexHeightLabel.setText(hexHeight)
-            hexFocusedLabel.setText("${hexFocusedAddress.toString(16)}/${String.format("%05d", hexFocusedAddress)}")
-//            if (dump != null)
+            focusedAddressLabelDec.setText(if (hexFocusedAddress < 0) "?????" else String.format("%05d", hexFocusedAddress))
+            focusedAddressLabelHex.setText("#${if (hexFocusedAddress < 0) "????" else String.format("%04X", hexFocusedAddress)}")
             val id = (hexFocusedAddress - startAddress) * 2
             if (id >= 0 && id < hexWidth * hexHeight * 2) {
                 val value = "${dump?.get(id)?.toInt()?.toChar() ?: "?"}${dump?.get(id + 1)?.toInt()?.toChar() ?: "?"}"
-                hexAddressContentLabel.setText(
-                    "${value}/${
-                        if (!value.contains("?")) String.format(
-                            "%03d", value.toInt(16)
-                                                               ) else "??"
-                    }"
-                                              )
+                focusContentLabelHex.setText("#${value}")
+                focusContentLabelDec.setText(if (value.contains("?"))"???" else String.format("%03d", value.toInt(16)))
             }
 
             connectButton.setText(if (dump == null || dump!!.isEmpty()) MESSAGE_CONNECT else MESSAGE_DISCONNECT)
@@ -61,13 +58,26 @@ class Top(private val font: BitmapFont, private val stage2: Stage) : VisTable() 
     init {
         align(Align.topLeft)
         width()
+        focusedAddress()
         connectButton()
         row()
-
         height()
+        focusedAddressContent()
 
     }
 
+
+    private fun focusedAddress() {
+        add(focusedAddressLabelHex).right().width(64f)
+        add("|").center().padLeft(8f).padRight(8f)
+        add(focusedAddressLabelDec).left().width(64f)
+    }
+
+    private fun focusedAddressContent() {
+        add(focusContentLabelHex).right().width(64f)
+        add("|").center().padLeft(8f).padRight(8f)
+        add(focusContentLabelDec).left().width(64f)
+    }
 
     private fun width() {
         add("W:").padLeft(pad).left()

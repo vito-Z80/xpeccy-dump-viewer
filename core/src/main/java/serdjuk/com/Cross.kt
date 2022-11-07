@@ -60,28 +60,28 @@ class Cross(private val main: View) {
     }
 
     private fun cursor() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isLagPressed(Input.Keys.LEFT)) {
             hexFocusedAddress--
             hexFocusedByteRectangle.x -= 24f
             if (hexFocusedByteRectangle.x < HEX_ADDRESS_WIDTH && hexFocusedByteRectangle.y == hexFirstByteRectangle.y) {
                 startAddress--
             }
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isLagPressed(Input.Keys.RIGHT)) {
             hexFocusedAddress++
             hexFocusedByteRectangle.x += 24f
             if (hexFocusedByteRectangle.x > hexLastByteRectangle.x && hexFocusedByteRectangle.y == hexLastByteRectangle.y) {
                 startAddress++
             }
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+        if (Gdx.input.isLagPressed(Input.Keys.UP)) {
             hexFocusedAddress -= hexWidth
             hexFocusedByteRectangle.y += 16f
             if (!hexBounds.overlaps(hexFocusedByteRectangle)) {
                 startAddress -= hexWidth
             }
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+        if (Gdx.input.isLagPressed(Input.Keys.DOWN)) {
             hexFocusedAddress += hexWidth
             hexFocusedByteRectangle.y -= 16f
             if (!hexBounds.overlaps(hexFocusedByteRectangle)) {
@@ -89,10 +89,10 @@ class Cross(private val main: View) {
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.PAGE_DOWN)) {
+        if (Gdx.input.isLagPressed(Input.Keys.PAGE_DOWN)) {
             startAddress += hexWidth * hexHeight
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.PAGE_UP)) {
+        if (Gdx.input.isLagPressed(Input.Keys.PAGE_UP)) {
             startAddress -= hexWidth * hexHeight
         }
     }
